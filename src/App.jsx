@@ -18,7 +18,7 @@ export default function App() {
             <img
               src={logoBadge}
               alt="EducaZone Logo"
-              className="relative h-11 sm:h-12 w-auto object-contain drop-shadow-[0_4px_16px_rgba(255,30,39,0.22)]"
+              className="relative h-12 sm:h-14 w-auto object-contain drop-shadow-[0_4px_16px_rgba(255,30,39,0.22)]"
             />
           </div>
         </div>
