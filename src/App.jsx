@@ -1,4 +1,4 @@
-import { Wrench } from 'lucide-react'
+import { Wrench, Phone, MessageCircle } from 'lucide-react'
 import logoBadge from './assets/educazone-badge.png'
 
 export default function App() {
@@ -57,6 +57,33 @@ export default function App() {
         <p className="text-xs sm:text-sm text-slate-500 mt-3 max-w-lg leading-relaxed">
           We apologize for any inconvenience caused. All services will be restored shortly.
         </p>
+
+        {/* Contact Support */}
+        <div className="mt-8 pt-6 border-t border-slate-200/60 flex flex-col items-center gap-3 w-full max-w-md">
+          <p className="text-xs sm:text-sm text-slate-500 font-medium">
+            For urgent queries or assistance, feel free to contact us:
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <a
+              href="tel:+919084715552"
+              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white border border-slate-200 hover:border-red-300 text-slate-800 hover:text-red-600 font-semibold text-sm shadow-xs hover:shadow-md transition-all group"
+            >
+              <div className="w-7 h-7 rounded-lg bg-red-50 text-red-600 flex items-center justify-center group-hover:bg-red-600 group-hover:text-white transition-colors">
+                <Phone className="w-3.5 h-3.5" />
+              </div>
+              <span>+91 90847 15552</span>
+            </a>
+            <a
+              href="https://wa.me/919084715552"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/80 text-emerald-700 font-semibold text-sm shadow-xs hover:shadow-md transition-all"
+            >
+              <MessageCircle className="w-4 h-4 text-emerald-600" />
+              <span>WhatsApp</span>
+            </a>
+          </div>
+        </div>
 
       </main>
 
