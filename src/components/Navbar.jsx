@@ -17,8 +17,8 @@ const subNavItems = [
   { name: 'Books', href: '#books' },
   { name: 'Books Solution', isDropdown: true },
   { name: 'Paid Test Series', href: '#paid-test-series' },
-  { name: 'PDF', href: '#pdf' },
-  { name: 'Previous Year Paper', href: '#previous-year-paper' },
+  { name: 'Free Resources', href: '#free-resources' },
+  { name: 'Previous Year Papers', href: '#previous-year-papers' },
   { name: 'Job Alerts', href: '#job-alerts' },
   { name: 'Blogs', href: '#blogs' },
   { name: 'Contact Us', href: '#contact-us' },
@@ -205,7 +205,7 @@ export default function Navbar({
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search by exam, class or book — JEE, NEET, Cla..."
+                  placeholder="Search by exam, class, or book — JEE, NEET, Class 10..."
                   className="w-full bg-transparent text-slate-800 placeholder-slate-400 text-xs font-normal outline-none pr-1.5"
                 />
                 {searchQuery && (
