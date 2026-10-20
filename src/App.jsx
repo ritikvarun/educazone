@@ -3,7 +3,7 @@ import Home from './pages/Home'
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-[#fafafc] text-slate-800 flex flex-col justify-between selection:bg-red-500 selection:text-white relative overflow-hidden font-sans">
+    <div className="min-h-screen bg-[#fafafc] text-slate-800 flex flex-col justify-between selection:bg-red-500 selection:text-white relative overflow-x-clip font-sans">
       
       {/* Background Grid Pattern & Ambient Red Glow */}
       <div className="absolute inset-0 bg-grid-pattern pointer-events-none" />
