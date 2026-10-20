@@ -2,13 +2,25 @@ import { useState } from 'react'
 import { Search, ShoppingCart, User, X } from 'lucide-react'
 import logoBadge from '../assets/educazone-badge.png'
 
+const subNavItems = [
+  { name: 'About Us', href: '#about-us' },
+  { name: 'Books', href: '#books' },
+  { name: 'Paid Test Series', href: '#paid-test-series' },
+  { name: 'PDF', href: '#pdf' },
+  { name: 'Previous Year Paper', href: '#previous-year-paper' },
+  { name: 'Job Alerts', href: '#job-alerts' },
+  { name: 'Blogs', href: '#blogs' },
+  { name: 'Contact Us', href: '#contact-us' },
+]
+
 export default function Navbar({
   cartCount = 0
 }) {
   const [searchQuery, setSearchQuery] = useState('')
 
   return (
-    <header className="relative z-30 w-full border-b border-slate-200/80 bg-white/75 backdrop-blur-md sticky top-0 transition-all">
+    <header className="relative z-30 w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md sticky top-0 transition-all shadow-xs">
+      {/* Main Navbar Top Row */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-3 sm:gap-6">
         
         {/* Left: Brand Logo */}
@@ -87,6 +99,24 @@ export default function Navbar({
         </div>
 
       </div>
+
+      {/* Sub Navbar Row (Pure text links, no dropdown) */}
+      <nav className="w-full border-t border-slate-200/60 bg-white/95">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ul className="flex items-center justify-center gap-5 sm:gap-7 md:gap-9 py-2.5 overflow-x-auto whitespace-nowrap no-scrollbar text-xs sm:text-sm font-medium text-slate-700">
+            {subNavItems.map((item) => (
+              <li key={item.name} className="shrink-0">
+                <a
+                  href={item.href}
+                  className="hover:text-red-600 transition-colors duration-150 py-0.5 inline-block"
+                >
+                  {item.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
     </header>
   )
 }

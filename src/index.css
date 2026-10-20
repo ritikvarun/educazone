@@ -33,6 +33,15 @@
   animation: float 5s ease-in-out infinite;
 }
 
+/* Hide scrollbar for horizontal menu on mobile */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 7px;
