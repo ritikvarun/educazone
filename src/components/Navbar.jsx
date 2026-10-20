@@ -5,6 +5,7 @@ import logoBadge from '../assets/educazone-badge.png'
 const subNavItems = [
   { name: 'About Us', href: '#about-us' },
   { name: 'Books', href: '#books' },
+  { name: 'Books Solution', href: '#books-solution' },
   { name: 'Paid Test Series', href: '#paid-test-series' },
   { name: 'PDF', href: '#pdf' },
   { name: 'Previous Year Paper', href: '#previous-year-paper' },
