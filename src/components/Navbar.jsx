@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { Search, ShoppingCart, User, X, ChevronDown } from 'lucide-react'
+import { Search, ShoppingCart, User, X, ChevronDown, Menu } from 'lucide-react'
 import logoBadge from '../assets/educazone-badge.png'
 
 const booksSolutionOptions = [
@@ -29,8 +29,11 @@ export default function Navbar({
 }) {
   const [searchQuery, setSearchQuery] = useState('')
   const [isBooksSolutionOpen, setIsBooksSolutionOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isMobileBooksOpen, setIsMobileBooksOpen] = useState(false)
   const dropdownRef = useRef(null)
 
+  // Close Books Solution dropdown on click outside
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -42,6 +45,18 @@ export default function Navbar({
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [])
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isMobileMenuOpen])
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-md shadow-xs transition-all">
@@ -98,12 +113,12 @@ export default function Navbar({
           </div>
         </form>
 
-        {/* Right: Actions (Login, Cart) */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          {/* Login Button */}
+        {/* Right: Actions (Login, Cart, Mobile Menu) */}
+        <div className="flex items-center gap-1.5 sm:gap-2.5 md:gap-3 shrink-0">
+          {/* Login Button (Hidden on mobile, visible on sm and up) */}
           <button
             type="button"
-            className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-full bg-white hover:bg-slate-50 border border-slate-200 hover:border-red-300 text-slate-700 hover:text-red-600 font-semibold text-xs sm:text-sm shadow-2xs hover:shadow-sm transition-all duration-200 active:scale-95 cursor-pointer"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-full bg-white hover:bg-slate-50 border border-slate-200 hover:border-red-300 text-slate-700 hover:text-red-600 font-semibold text-xs sm:text-sm shadow-2xs hover:shadow-sm transition-all duration-200 active:scale-95 cursor-pointer"
           >
             <User className="w-4 h-4 text-slate-500 group-hover:text-red-600" />
             <span>Login</span>
@@ -114,19 +129,30 @@ export default function Navbar({
             type="button"
             title="Shopping Cart"
             aria-label="Shopping Cart"
-            className="relative p-2.5 rounded-full text-slate-700 hover:text-red-600 hover:bg-red-50/80 transition-all duration-200 cursor-pointer active:scale-90"
+            className="relative p-2 sm:p-2.5 rounded-full text-slate-700 hover:text-red-600 hover:bg-red-50/80 transition-all duration-200 cursor-pointer active:scale-90"
           >
             <ShoppingCart className="w-5 h-5" />
             <span className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 bg-red-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center shadow-xs">
               {cartCount}
             </span>
           </button>
+
+          {/* Mobile Menu Hamburger Button (On Right Side) */}
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen(true)}
+            title="Open Menu"
+            aria-label="Open Navigation Menu"
+            className="md:hidden p-2 rounded-xl text-slate-800 hover:text-red-600 hover:bg-red-50/80 transition-all duration-200 cursor-pointer active:scale-90"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
         </div>
 
       </div>
 
-      {/* Sub Navbar Row */}
-      <nav className="w-full border-t border-slate-200/60 bg-white/95 relative">
+      {/* Sub Navbar Row (Desktop & Tablet) */}
+      <nav className="hidden md:block w-full border-t border-slate-200/60 bg-white/95 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ul className="flex items-center justify-center gap-5 sm:gap-7 md:gap-9 py-2.5 overflow-x-auto sm:overflow-visible whitespace-nowrap no-scrollbar text-xs sm:text-sm font-medium text-slate-700">
             {subNavItems.map((item) => (
@@ -189,6 +215,127 @@ export default function Navbar({
           </ul>
         </div>
       </nav>
+
+      {/* Mobile Menu Backdrop */}
+      {isMobileMenuOpen && (
+        <div
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="fixed inset-0 bg-black/50 backdrop-blur-xs z-[60] transition-opacity duration-300 md:hidden"
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Mobile Slide-over Drawer (From Right Side) */}
+      <div
+        className={`fixed top-0 right-0 h-full w-[310px] max-w-[85vw] bg-white z-[70] shadow-2xl flex flex-col transition-transform duration-300 ease-in-out md:hidden border-l border-slate-200 ${
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        {/* Top Red Accent Line */}
+        <div className="h-[3px] bg-red-600 w-full shrink-0" />
+
+        {/* Drawer Header */}
+        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200/80">
+          <img src={logoBadge} alt="EducaZone Logo" className="h-10 w-auto object-contain" />
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="p-1.5 rounded-full text-slate-500 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
+            aria-label="Close menu"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Drawer Scrollable Content */}
+        <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+          {/* Quick Action Buttons: Login & Cart */}
+          <div className="grid grid-cols-2 gap-2.5 pb-4 border-b border-slate-100">
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-red-600 hover:bg-red-700 active:scale-95 text-white font-bold text-xs transition-all shadow-xs cursor-pointer"
+            >
+              <User className="w-4 h-4" />
+              <span>Login</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-50 hover:bg-red-50 text-slate-900 hover:text-red-600 font-bold text-xs border border-slate-200 transition-all cursor-pointer"
+            >
+              <ShoppingCart className="w-4 h-4 text-slate-700" />
+              <span>Cart ({cartCount})</span>
+            </button>
+          </div>
+
+          {/* Navigation Links List */}
+          <nav>
+            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2 px-1">Menu</p>
+            <ul className="space-y-1">
+              {subNavItems.map((item) => (
+                <li key={item.name}>
+                  {item.isDropdown ? (
+                    <div>
+                      <button
+                        type="button"
+                        onClick={() => setIsMobileBooksOpen((prev) => !prev)}
+                        className={`w-full flex items-center justify-between py-2.5 px-3 rounded-xl font-bold text-sm transition-colors text-left cursor-pointer ${
+                          isMobileBooksOpen ? 'text-red-600 bg-red-50/60' : 'text-slate-900 hover:bg-red-50/60 hover:text-red-600'
+                        }`}
+                      >
+                        <span>{item.name}</span>
+                        <ChevronDown
+                          className={`w-4 h-4 transition-transform duration-200 ${
+                            isMobileBooksOpen ? 'rotate-180 text-red-600' : 'text-slate-400'
+                          }`}
+                        />
+                      </button>
+
+                      {/* Expandable Accordion for Books Solution */}
+                      {isMobileBooksOpen && (
+                        <div className="my-1.5 ml-3 pl-3 border-l-2 border-red-500 bg-slate-50/60 rounded-r-xl py-1">
+                          <ul className="space-y-0.5">
+                            {booksSolutionOptions.map((opt, idx) => (
+                              <li key={opt.name}>
+                                <a
+                                  href={opt.href}
+                                  onClick={() => setIsMobileMenuOpen(false)}
+                                  className={`block py-2 px-3 text-xs font-bold rounded-lg transition-colors ${
+                                    idx === 0
+                                      ? 'text-red-600 bg-red-50/60'
+                                      : 'text-slate-800 hover:text-red-600 hover:bg-white'
+                                  }`}
+                                >
+                                  {opt.name}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <a
+                      href={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="block py-2.5 px-3 rounded-xl font-bold text-sm text-slate-900 hover:bg-red-50/60 hover:text-red-600 transition-colors"
+                    >
+                      {item.name}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+
+        {/* Drawer Footer */}
+        <div className="p-4 border-t border-slate-200/80 bg-slate-50/60 text-xs text-slate-500 flex items-center justify-between">
+          <span className="font-semibold text-slate-700">EducaZone</span>
+          <span className="text-[11px] font-bold text-red-600 tracking-wider">LEARN | GROW | SUCCEED</span>
+        </div>
+      </div>
     </header>
   )
 }
