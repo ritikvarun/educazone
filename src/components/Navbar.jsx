@@ -66,12 +66,11 @@ export default function Navbar({
         <div className="hidden md:flex max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 items-center justify-between gap-6">
           {/* Left: Brand Logo */}
           <div className="flex items-center shrink-0">
-            <a href="#" className="relative group flex items-center gap-2">
-              <div className="absolute -inset-1 bg-red-500/15 rounded-2xl blur-md group-hover:bg-red-500/25 transition-all"></div>
+            <a href="#" className="flex items-center">
               <img
                 src={logoBadge}
                 alt="EducaZone Logo"
-                className="relative h-13 sm:h-15 lg:h-16 w-auto object-contain drop-shadow-[0_4px_16px_rgba(255,30,39,0.22)] transition-transform duration-200 group-hover:scale-[1.02]"
+                className="h-13 sm:h-15 lg:h-16 w-auto object-contain transition-transform duration-200 hover:scale-[1.02]"
               />
             </a>
           </div>
