@@ -324,30 +324,9 @@ export default function Navbar({
         </div>
 
         {/* Drawer Scrollable Content */}
-        <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
-          {/* Quick Action Buttons: Login & Cart */}
-          <div className="grid grid-cols-2 gap-2.5 pb-4 border-b border-slate-100">
-            <button
-              type="button"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-red-600 hover:bg-red-700 active:scale-95 text-white font-bold text-xs transition-all shadow-xs cursor-pointer"
-            >
-              <User className="w-4 h-4" />
-              <span>Login</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-50 hover:bg-red-50 text-slate-900 hover:text-red-600 font-bold text-xs border border-slate-200 transition-all cursor-pointer"
-            >
-              <ShoppingCart className="w-4 h-4 text-slate-700" />
-              <span>Cart ({cartCount})</span>
-            </button>
-          </div>
-
+        <div className="flex-1 overflow-y-auto px-4 py-3">
           {/* Navigation Links in RBW Theme */}
           <nav>
-            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2 px-1">Menu</p>
             <ul className="space-y-1">
               {subNavItems.map((item) => (
                 <li key={item.name}>
