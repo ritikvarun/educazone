@@ -1,11 +1,21 @@
-import { useState } from 'react'
-import { Search, ShoppingCart, User, X } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
+import { Search, ShoppingCart, User, X, ChevronDown } from 'lucide-react'
 import logoBadge from '../assets/educazone-badge.png'
+
+const booksSolutionOptions = [
+  { name: 'Class 9', href: '#class-9' },
+  { name: 'Class 10', href: '#class-10' },
+  { name: 'Class 11', href: '#class-11' },
+  { name: 'Class 12', href: '#class-12' },
+  { name: 'Entrance Exams', href: '#entrance-exams' },
+  { name: 'K-8 Solutions', href: '#k-8-solutions' },
+  { name: 'K-8 E-Learning', href: '#k-8-e-learning' },
+]
 
 const subNavItems = [
   { name: 'About Us', href: '#about-us' },
   { name: 'Books', href: '#books' },
-  { name: 'Books Solution', href: '#books-solution' },
+  { name: 'Books Solution', isDropdown: true },
   { name: 'Paid Test Series', href: '#paid-test-series' },
   { name: 'PDF', href: '#pdf' },
   { name: 'Previous Year Paper', href: '#previous-year-paper' },
@@ -18,6 +28,20 @@ export default function Navbar({
   cartCount = 0
 }) {
   const [searchQuery, setSearchQuery] = useState('')
+  const [isBooksSolutionOpen, setIsBooksSolutionOpen] = useState(false)
+  const dropdownRef = useRef(null)
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsBooksSolutionOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-md shadow-xs transition-all">
@@ -101,18 +125,65 @@ export default function Navbar({
 
       </div>
 
-      {/* Sub Navbar Row (Pure text links, no dropdown) */}
-      <nav className="w-full border-t border-slate-200/60 bg-white/95">
+      {/* Sub Navbar Row */}
+      <nav className="w-full border-t border-slate-200/60 bg-white/95 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ul className="flex items-center justify-center gap-5 sm:gap-7 md:gap-9 py-2.5 overflow-x-auto whitespace-nowrap no-scrollbar text-xs sm:text-sm font-medium text-slate-700">
+          <ul className="flex items-center justify-center gap-5 sm:gap-7 md:gap-9 py-2.5 overflow-x-auto sm:overflow-visible whitespace-nowrap no-scrollbar text-xs sm:text-sm font-medium text-slate-700">
             {subNavItems.map((item) => (
               <li key={item.name} className="shrink-0">
-                <a
-                  href={item.href}
-                  className="hover:text-red-600 transition-colors duration-150 py-0.5 inline-block"
-                >
-                  {item.name}
-                </a>
+                {item.isDropdown ? (
+                  <div className="relative inline-block text-left" ref={dropdownRef}>
+                    <button
+                      type="button"
+                      onClick={() => setIsBooksSolutionOpen((prev) => !prev)}
+                      className={`inline-flex items-center gap-1 py-0.5 cursor-pointer font-medium transition-colors duration-150 ${
+                        isBooksSolutionOpen ? 'text-red-600 font-semibold' : 'hover:text-red-600'
+                      }`}
+                      aria-expanded={isBooksSolutionOpen}
+                    >
+                      <span>{item.name}</span>
+                      <ChevronDown
+                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                          isBooksSolutionOpen ? 'rotate-180 text-red-600' : 'text-slate-500'
+                        }`}
+                      />
+                    </button>
+
+                    {/* Dropdown Menu matching user screenshot */}
+                    {isBooksSolutionOpen && (
+                      <div className="absolute left-0 top-full mt-2 w-48 sm:w-52 bg-white rounded-md shadow-2xl border border-slate-200/90 z-50 overflow-hidden text-left animate-in fade-in slide-in-from-top-1 duration-150">
+                        {/* Top Red Accent Stripe (matching screenshot) */}
+                        <div className="h-[3px] bg-red-600 w-full" />
+
+                        {/* List Items with Dividers */}
+                        <ul className="divide-y divide-slate-100 py-0.5">
+                          {booksSolutionOptions.map((opt, idx) => (
+                            <li key={opt.name}>
+                              <a
+                                href={opt.href}
+                                onClick={() => setIsBooksSolutionOpen(false)}
+                                className={`block px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-bold tracking-tight transition-colors duration-150 ${
+                                  idx === 0
+                                    ? 'text-blue-600 hover:bg-slate-50'
+                                    : 'text-slate-800 hover:text-blue-600 hover:bg-slate-50'
+                                }`}
+                              >
+                                {opt.name}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <a
+                    href={item.href}
+                    className="hover:text-red-600 transition-colors duration-150 py-0.5 inline-block"
+                  >
+                    {item.name}
+                  </a>
+                )}
               </li>
             ))}
           </ul>
