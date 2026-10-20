@@ -335,21 +335,30 @@ export default function Navbar({
                       <button
                         type="button"
                         onClick={() => setIsMobileBooksOpen((prev) => !prev)}
-                        className={`w-full flex items-center justify-between py-2.5 px-3 rounded-xl font-bold text-sm transition-colors text-left cursor-pointer ${
-                          isMobileBooksOpen ? 'text-red-600 bg-red-50/60' : 'text-slate-900 hover:bg-red-50/60 hover:text-red-600'
+                        className={`w-full flex items-center justify-between py-2.5 px-3.5 rounded-xl font-bold text-sm transition-all text-left cursor-pointer ${
+                          isMobileBooksOpen
+                            ? 'bg-red-600 text-white shadow-sm'
+                            : 'bg-red-50 text-red-600 border border-red-200/80 hover:bg-red-100/70'
                         }`}
                       >
-                        <span>{item.name}</span>
+                        <span className="flex items-center gap-2">
+                          <span
+                            className={`w-2 h-2 rounded-full ${
+                              isMobileBooksOpen ? 'bg-white' : 'bg-red-600 animate-pulse'
+                            }`}
+                          />
+                          <span>{item.name}</span>
+                        </span>
                         <ChevronDown
                           className={`w-4 h-4 transition-transform duration-200 ${
-                            isMobileBooksOpen ? 'rotate-180 text-red-600' : 'text-slate-400'
+                            isMobileBooksOpen ? 'rotate-180 text-white' : 'text-red-600'
                           }`}
                         />
                       </button>
 
                       {/* Expandable Accordion for Books Solution */}
                       {isMobileBooksOpen && (
-                        <div className="my-1.5 ml-3 pl-3 border-l-2 border-red-500 bg-slate-50/60 rounded-r-xl py-1">
+                        <div className="mt-1.5 ml-2 pl-3 border-l-2 border-red-600 bg-red-50/40 rounded-r-xl py-1">
                           <ul className="space-y-0.5">
                             {booksSolutionOptions.map((opt, idx) => (
                               <li key={opt.name}>
@@ -358,7 +367,7 @@ export default function Navbar({
                                   onClick={() => setIsMobileMenuOpen(false)}
                                   className={`block py-2 px-3 text-xs font-bold rounded-lg transition-colors ${
                                     idx === 0
-                                      ? 'text-red-600 bg-red-50/60'
+                                      ? 'text-red-600 bg-red-100/60'
                                       : 'text-slate-800 hover:text-red-600 hover:bg-white'
                                   }`}
                                 >
