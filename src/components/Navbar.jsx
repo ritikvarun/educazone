@@ -155,17 +155,17 @@ export default function Navbar({
                         {/* Top Red Accent Stripe (matching screenshot) */}
                         <div className="h-[3px] bg-red-600 w-full" />
 
-                        {/* List Items with Dividers */}
+                        {/* List Items with Dividers in RBW Theme */}
                         <ul className="divide-y divide-slate-100 py-0.5">
                           {booksSolutionOptions.map((opt, idx) => (
                             <li key={opt.name}>
                               <a
                                 href={opt.href}
                                 onClick={() => setIsBooksSolutionOpen(false)}
-                                className={`block px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-bold tracking-tight transition-colors duration-150 ${
+                                className={`block px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-bold tracking-tight transition-all duration-150 ${
                                   idx === 0
-                                    ? 'text-blue-600 hover:bg-slate-50'
-                                    : 'text-slate-800 hover:text-blue-600 hover:bg-slate-50'
+                                    ? 'text-red-600 bg-red-50/40 hover:bg-red-50 hover:text-red-700'
+                                    : 'text-slate-900 hover:text-red-600 hover:bg-red-50/50'
                                 }`}
                               >
                                 {opt.name}
