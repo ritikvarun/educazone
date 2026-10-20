@@ -25,7 +25,10 @@ const subNavItems = [
 ]
 
 export default function Navbar({
-  cartCount = 0
+  cartCount = 0,
+  onNavigateHome,
+  onNavigateClass9,
+  currentPage = 'home'
 }) {
   const [searchQuery, setSearchQuery] = useState('')
   const [isBooksSolutionOpen, setIsBooksSolutionOpen] = useState(false)
@@ -66,7 +69,16 @@ export default function Navbar({
         <div className="hidden md:flex max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 items-center justify-between gap-6">
           {/* Left: Brand Logo */}
           <div className="flex items-center shrink-0">
-            <a href="#" className="flex items-center">
+            <a
+              href="#home"
+              onClick={(e) => {
+                if (onNavigateHome) {
+                  e.preventDefault()
+                  onNavigateHome()
+                }
+              }}
+              className="flex items-center cursor-pointer"
+            >
               <img
                 src={logoBadge}
                 alt="EducaZone Logo"
@@ -153,7 +165,16 @@ export default function Navbar({
                 <Menu className="w-6 h-6 stroke-[2]" />
               </button>
 
-              <a href="#" className="flex items-center">
+              <a
+                href="#home"
+                onClick={(e) => {
+                  if (onNavigateHome) {
+                    e.preventDefault()
+                    onNavigateHome()
+                  }
+                }}
+                className="flex items-center cursor-pointer"
+              >
                 <img
                   src={logoBadge}
                   alt="EducaZone Logo"
@@ -258,10 +279,16 @@ export default function Navbar({
                               <li key={opt.name}>
                                 <a
                                   href={opt.href}
-                                  onClick={() => setIsBooksSolutionOpen(false)}
+                                  onClick={(e) => {
+                                    setIsBooksSolutionOpen(false)
+                                    if (opt.href === '#class-9' && onNavigateClass9) {
+                                      e.preventDefault()
+                                      onNavigateClass9()
+                                    }
+                                  }}
                                   className={`block px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-bold tracking-tight transition-all duration-150 ${
-                                    idx === 0
-                                      ? 'text-red-600 bg-red-50/40 hover:bg-red-50 hover:text-red-700'
+                                    opt.href === '#class-9'
+                                      ? 'text-red-600 bg-red-50/70 hover:bg-red-50 hover:text-red-700'
                                       : 'text-slate-900 hover:text-red-600 hover:bg-red-50/50'
                                   }`}
                                 >
@@ -311,7 +338,19 @@ export default function Navbar({
 
         {/* Drawer Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200/80 shrink-0">
-          <img src={logoBadge} alt="EducaZone Logo" className="h-11 w-auto object-contain" />
+          <a
+            href="#home"
+            onClick={(e) => {
+              setIsMobileMenuOpen(false)
+              if (onNavigateHome) {
+                e.preventDefault()
+                onNavigateHome()
+              }
+            }}
+            className="flex items-center cursor-pointer"
+          >
+            <img src={logoBadge} alt="EducaZone Logo" className="h-11 w-auto object-contain" />
+          </a>
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(false)}
@@ -363,10 +402,16 @@ export default function Navbar({
                               <li key={opt.name}>
                                 <a
                                   href={opt.href}
-                                  onClick={() => setIsMobileMenuOpen(false)}
+                                  onClick={(e) => {
+                                    setIsMobileMenuOpen(false)
+                                    if (opt.href === '#class-9' && onNavigateClass9) {
+                                      e.preventDefault()
+                                      onNavigateClass9()
+                                    }
+                                  }}
                                   className={`block py-2 px-3 text-xs font-bold rounded-lg transition-colors ${
-                                    idx === 0
-                                      ? 'text-red-600 bg-red-100/60'
+                                    opt.href === '#class-9'
+                                      ? 'text-red-600 bg-red-100/70'
                                       : 'text-slate-800 hover:text-red-600 hover:bg-white'
                                   }`}
                                 >
