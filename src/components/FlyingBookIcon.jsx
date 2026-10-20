@@ -1,7 +1,7 @@
 export default function FlyingBookIcon({
-  className = 'w-28 sm:w-36 md:w-44 lg:w-52 h-auto',
+  className = 'w-14 sm:w-16 md:w-18 lg:w-20 h-auto',
   color = '#7A5A45',
-  opacity = 0.45
+  opacity = 0.4
 }) {
   return (
     <svg

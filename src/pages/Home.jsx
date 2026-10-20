@@ -22,15 +22,13 @@ export default function Home() {
   return (
     <div className="relative flex-1 flex flex-col justify-between w-full">
       
-      {/* Floating Book Illustration - Right Side Middle */}
+      {/* Floating Book Illustration - Left Side (Exact position & size as in 2nd reference image) */}
       <div
-        className="absolute right-4 sm:right-8 md:right-12 lg:right-20 xl:right-32 top-1/2 -translate-y-1/2 pointer-events-none select-none z-10"
+        className="absolute left-4 sm:left-8 md:left-14 lg:left-20 xl:left-32 top-24 sm:top-28 md:top-32 pointer-events-none select-none z-10"
         aria-hidden="true"
       >
         <div className="relative animate-float">
-          {/* Subtle warm halo behind illustration */}
-          <div className="absolute -inset-6 bg-amber-500/[0.04] rounded-full blur-2xl pointer-events-none" />
-          <FlyingBookIcon className="w-24 sm:w-32 md:w-40 lg:w-48 xl:w-56 h-auto drop-shadow-xs" />
+          <FlyingBookIcon className="w-14 sm:w-16 md:w-18 lg:w-20 h-auto" />
         </div>
       </div>
 
