@@ -1,5 +1,5 @@
 import { Wrench, Phone } from 'lucide-react'
-import flyingBookHd from '../assets/flying-book-hd.png'
+import FlyingBookIcon from '../components/FlyingBookIcon'
 
 function WhatsAppIcon({ className = 'w-4 h-4' }) {
   return (
@@ -24,17 +24,13 @@ export default function Home() {
       
       {/* Floating Book Illustration - Right Side Middle */}
       <div
-        className="absolute right-4 sm:right-8 md:right-12 lg:right-20 xl:right-32 top-1/2 -translate-y-1/2 pointer-events-none select-none z-10 opacity-30 sm:opacity-85 md:opacity-95"
+        className="absolute right-4 sm:right-8 md:right-12 lg:right-20 xl:right-32 top-1/2 -translate-y-1/2 pointer-events-none select-none z-10"
         aria-hidden="true"
       >
         <div className="relative animate-float">
           {/* Subtle warm halo behind illustration */}
-          <div className="absolute -inset-6 bg-amber-500/[0.08] rounded-full blur-2xl pointer-events-none" />
-          <img
-            src={flyingBookHd}
-            alt="Flying Book Illustration"
-            className="w-24 sm:w-32 md:w-40 lg:w-48 xl:w-52 h-auto object-contain drop-shadow-[0_10px_25px_rgba(180,140,110,0.18)]"
-          />
+          <div className="absolute -inset-6 bg-amber-500/[0.04] rounded-full blur-2xl pointer-events-none" />
+          <FlyingBookIcon className="w-24 sm:w-32 md:w-40 lg:w-48 xl:w-56 h-auto drop-shadow-xs" />
         </div>
       </div>
 
