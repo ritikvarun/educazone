@@ -71,7 +71,7 @@ export default function Navbar({
               <img
                 src={logoBadge}
                 alt="EducaZone Logo"
-                className="relative h-11 sm:h-13 w-auto object-contain drop-shadow-[0_4px_16px_rgba(255,30,39,0.22)] transition-transform duration-200 group-hover:scale-[1.02]"
+                className="relative h-13 sm:h-15 lg:h-16 w-auto object-contain drop-shadow-[0_4px_16px_rgba(255,30,39,0.22)] transition-transform duration-200 group-hover:scale-[1.02]"
               />
             </a>
           </div>
@@ -158,7 +158,7 @@ export default function Navbar({
                 <img
                   src={logoBadge}
                   alt="EducaZone Logo"
-                  className="h-9 w-auto object-contain"
+                  className="h-11 sm:h-12 w-auto object-contain"
                 />
               </a>
             </div>
@@ -312,7 +312,7 @@ export default function Navbar({
 
         {/* Drawer Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200/80 shrink-0">
-          <img src={logoBadge} alt="EducaZone Logo" className="h-9 w-auto object-contain" />
+          <img src={logoBadge} alt="EducaZone Logo" className="h-11 w-auto object-contain" />
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(false)}
