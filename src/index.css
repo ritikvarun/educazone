@@ -11,13 +11,6 @@
   --color-brand-700: #be0a12;
 }
 
-/* Subtle delicate grid pattern for clean light background */
-.bg-grid-pattern {
-  background-size: 36px 36px;
-  background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
-}
 
 /* Gentle floating animation for flying book illustration */
 @keyframes float {
