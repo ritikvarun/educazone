@@ -20,7 +20,7 @@ export default function Navbar({
   const [searchQuery, setSearchQuery] = useState('')
 
   return (
-    <header className="relative z-30 w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md sticky top-0 transition-all shadow-xs">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-md shadow-xs transition-all">
       {/* Main Navbar Top Row */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-3 sm:gap-6">
         
