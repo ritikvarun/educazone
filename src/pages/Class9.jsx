@@ -806,42 +806,6 @@ export default function Class9({ onNavigateHome }) {
               </button>
             </div>
 
-            {/* Widget 2: 3-Step QR Guide */}
-            <div className="bg-white rounded-2xl border border-slate-200/90 p-4 shadow-2xs space-y-3">
-              <div className="flex items-center gap-2 text-red-600">
-                <QrCode className="w-4 h-4" />
-                <h4 className="text-xs font-black uppercase tracking-wider text-slate-900">
-                  How Book QR Works
-                </h4>
-              </div>
-
-              <div className="space-y-2.5 text-xs">
-                <div className="flex items-start gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-red-100 text-red-700 flex items-center justify-center text-[10px] font-black shrink-0 mt-0.5">
-                    1
-                  </div>
-                  <p className="text-slate-600">
-                    Open your printed EducaZone Class 9 physical book.
-                  </p>
-                </div>
-                <div className="flex items-start gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-red-100 text-red-700 flex items-center justify-center text-[10px] font-black shrink-0 mt-0.5">
-                    2
-                  </div>
-                  <p className="text-slate-600">
-                    Scan the QR code printed on the chapter title page.
-                  </p>
-                </div>
-                <div className="flex items-start gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-red-100 text-red-700 flex items-center justify-center text-[10px] font-black shrink-0 mt-0.5">
-                    3
-                  </div>
-                  <p className="text-slate-600">
-                    Access instant chapter video solutions & notes on your phone!
-                  </p>
-                </div>
-              </div>
-            </div>
 
             {/* Widget 3: WhatsApp Mentor Support */}
             <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-2xl p-4 shadow-md space-y-2.5">
