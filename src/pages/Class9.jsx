@@ -6,7 +6,8 @@ import {
   Check,
   Download,
   BookOpen,
-  Sparkles
+  Sparkles,
+  Clock
 } from 'lucide-react'
 
 // Filter Options matching reference screenshot
@@ -375,11 +376,10 @@ export default function Class9({ onNavigateHome }) {
                     <span className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-red-600 transition-colors">
                       {subject.name}
                     </span>
-                    {subject.isPopular && (
-                      <span className="text-[9px] font-bold text-red-600 bg-red-50 px-1.5 py-0.5 rounded">
-                        NEW
-                      </span>
-                    )}
+                    <span className="text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/80 px-2 py-0.5 rounded-md flex items-center gap-1">
+                      <Clock className="w-2.5 h-2.5 text-amber-600 animate-pulse" />
+                      <span>Soon</span>
+                    </span>
                   </div>
 
                   {/* Right: 'View' text + circle arrow button */}
@@ -566,51 +566,85 @@ export default function Class9({ onNavigateHome }) {
               </button>
             </div>
 
-            {/* Modal Body */}
+            {/* Modal Body: Coming Soon */}
             <div className="p-6 space-y-4">
-              <div className="p-4 rounded-2xl bg-red-50/70 border border-red-200 text-xs text-red-700 leading-relaxed flex items-start gap-2.5">
-                <Sparkles className="w-4 h-4 shrink-0 mt-0.5 text-red-600" />
-                <span>
-                  Official chapter solutions and practice question sets for <strong>{selectedSubjectModal.name} ({activeTab})</strong> are linked with your physical Class 9 book QR code.
-                </span>
+              <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200/90 text-xs text-amber-900 leading-relaxed space-y-2">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800">
+                  <Clock className="w-3.5 h-3.5 text-amber-600 animate-pulse" />
+                  <span>Content Status: Coming Soon</span>
+                </div>
+                <p>
+                  Official chapter solutions, answer keys, and practice sets for <strong>{selectedSubjectModal.name} ({activeTab})</strong> are currently being prepared by our subject experts and will be uploaded here shortly for the 2026-27 session.
+                </p>
               </div>
 
               <div className="rounded-xl border border-slate-200 divide-y divide-slate-100 text-xs">
                 <div className="p-3 flex items-center justify-between">
-                  <span className="text-slate-500">Available Practice Content:</span>
-                  <span className="font-bold text-slate-800">{selectedSubjectModal.totalSets}</span>
+                  <span className="text-slate-500">Publication Status:</span>
+                  <span className="font-bold text-red-600 bg-red-50 border border-red-200 px-2 py-0.5 rounded">
+                    Coming Soon (Uploading Shortly)
+                  </span>
                 </div>
                 <div className="p-3 flex items-center justify-between">
                   <span className="text-slate-500">Curriculum Session:</span>
                   <span className="font-bold text-slate-800">{selectedSession}</span>
                 </div>
                 <div className="p-3 flex items-center justify-between">
-                  <span className="text-slate-500">File Download Format:</span>
-                  <span className="font-bold text-slate-800">High Resolution PDF ({selectedSubjectModal.pdfSize})</span>
+                  <span className="text-slate-500">Target Board:</span>
+                  <span className="font-bold text-slate-800">{activeBoardText}</span>
                 </div>
+                <div className="p-3 flex items-center justify-between">
+                  <span className="text-slate-500">Physical Book Sync:</span>
+                  <span className="font-medium text-slate-700">Official Class 9 QR Code Companion</span>
+                </div>
+              </div>
+
+              {/* Instant WhatsApp Help Note */}
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-3 text-xs">
+                <span className="text-slate-600">Need this specific chapter solution urgently?</span>
+                <a
+                  href={`https://wa.me/919084715552?text=Hello%20EducaZone%20Team%2C%20I%20scanned%20the%20Class%209%20QR%20code%20and%20need%20urgent%20solutions%20for%20${encodeURIComponent(selectedSubjectModal.name)}%20(${encodeURIComponent(activeTab)}).`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 text-emerald-700 hover:text-emerald-800 font-bold inline-flex items-center gap-1 underline"
+                >
+                  <WhatsAppIcon className="w-3.5 h-3.5" />
+                  <span>Ask on WhatsApp</span>
+                </a>
               </div>
             </div>
 
             {/* Modal Footer */}
-            <div className="p-4 sm:p-5 border-t border-slate-100 bg-slate-50/60 flex items-center justify-end gap-2.5">
-              <button
-                type="button"
-                onClick={() => setSelectedSubjectModal(null)}
-                className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-white text-xs font-bold cursor-pointer"
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  handleDownload(selectedSubjectModal)
-                  setSelectedSubjectModal(null)
-                }}
-                className="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold shadow-md shadow-red-500/20 transition-all flex items-center gap-1.5 cursor-pointer"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span>Download PDF</span>
-              </button>
+            <div className="p-4 sm:p-5 border-t border-slate-100 bg-slate-50/60 flex items-center justify-between gap-2.5">
+              <span className="text-[11px] font-bold text-slate-500 hidden sm:inline">
+                EducaZone Class 9 Support
+              </span>
+              <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+                <button
+                  type="button"
+                  onClick={() => setSelectedSubjectModal(null)}
+                  className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-white text-xs font-bold cursor-pointer"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  disabled
+                  className="px-4 py-2.5 rounded-xl bg-slate-200 text-slate-500 text-xs font-bold flex items-center gap-1.5 cursor-not-allowed select-none"
+                >
+                  <Clock className="w-3.5 h-3.5 text-slate-500" />
+                  <span>Coming Soon</span>
+                </button>
+                <a
+                  href={`https://wa.me/919084715552?text=Hello%20EducaZone%20Team%2C%20I%20scanned%20the%20Class%209%20QR%20code%20and%20need%20urgent%20solutions%20for%20${encodeURIComponent(selectedSubjectModal.name)}%20(${encodeURIComponent(activeTab)}).`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white text-xs font-bold shadow-xs transition-all flex items-center gap-1.5 cursor-pointer"
+                >
+                  <WhatsAppIcon className="w-3.5 h-3.5" />
+                  <span>WhatsApp</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
