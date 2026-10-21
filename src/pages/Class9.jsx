@@ -702,17 +702,6 @@ export default function Class9({ onNavigateHome }) {
                           {subject.name}
                         </h3>
 
-                        {/* Pills Row (Matching Image 1: Class 11, Class 12, Dropper style rounded pills) */}
-                        <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
-                          {cardConfig.pills.map((pill, idx) => (
-                            <span
-                              key={idx}
-                              className="text-xs font-semibold text-slate-600 bg-white border border-slate-200/90 rounded-full px-3 py-1 shadow-2xs whitespace-nowrap"
-                            >
-                              {pill}
-                            </span>
-                          ))}
-                        </div>
                       </div>
 
                       {/* Bottom Action Link (Matching Image 1: "Explore Category ➔") */}
