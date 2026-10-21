@@ -3,34 +3,51 @@ import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Class9 from './pages/Class9'
 
+function isClass9Route() {
+  if (typeof window === 'undefined') return false
+  const path = window.location.pathname.toLowerCase().replace(/\/+$/, '')
+  const hash = window.location.hash.toLowerCase()
+  return path === '/class-9' || path === '/class9' || hash === '#class-9'
+}
+
 export default function App() {
   const [currentPage, setCurrentPage] = useState(() => {
-    if (typeof window !== 'undefined' && window.location.hash.toLowerCase() === '#class-9') {
-      return 'class-9'
-    }
-    return 'home'
+    return isClass9Route() ? 'class-9' : 'home'
   })
 
-  // Listen to hash changes (e.g. clicking links or browser back/forward)
+  // Listen to browser navigation (back/forward) and route changes
   useEffect(() => {
-    function handleHashChange() {
-      const hash = window.location.hash.toLowerCase()
-      if (hash === '#class-9') {
+    function handleLocationChange() {
+      if (isClass9Route()) {
         setCurrentPage('class-9')
         window.scrollTo({ top: 0, behavior: 'smooth' })
-      } else if (hash === '#home' || hash === '' || hash === '#') {
+      } else {
         setCurrentPage('home')
         window.scrollTo({ top: 0, behavior: 'smooth' })
       }
     }
 
-    window.addEventListener('hashchange', handleHashChange)
-    return () => window.removeEventListener('hashchange', handleHashChange)
+    // If loaded with legacy #class-9 hash, cleanly migrate URL bar to /class-9
+    if (typeof window !== 'undefined' && window.location.hash.toLowerCase() === '#class-9') {
+      window.history.replaceState({}, '', '/class-9')
+    }
+
+    window.addEventListener('popstate', handleLocationChange)
+    window.addEventListener('hashchange', handleLocationChange)
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange)
+      window.removeEventListener('hashchange', handleLocationChange)
+    }
   }, [])
 
   const navigateTo = (page) => {
     setCurrentPage(page)
-    window.location.hash = page === 'home' ? '' : page
+    const targetPath = page === 'home' ? '/' : `/${page}`
+    if (typeof window !== 'undefined') {
+      if (window.location.pathname !== targetPath || window.location.hash) {
+        window.history.pushState({}, '', targetPath)
+      }
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 

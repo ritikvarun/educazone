@@ -3,7 +3,7 @@ import { Search, ShoppingCart, User, X, ChevronDown, Menu } from 'lucide-react'
 import logoBadge from '../assets/educazone-badge.png'
 
 const booksSolutionOptions = [
-  { name: 'Class 9', href: '#class-9' },
+  { name: 'Class 9', href: '/class-9' },
   { name: 'Class 10', href: '#class-10' },
   { name: 'Class 11', href: '#class-11' },
   { name: 'Class 12', href: '#class-12' },
@@ -70,7 +70,7 @@ export default function Navbar({
           {/* Left: Brand Logo */}
           <div className="flex items-center shrink-0">
             <a
-              href="#home"
+              href="/"
               onClick={(e) => {
                 if (onNavigateHome) {
                   e.preventDefault()
@@ -166,7 +166,7 @@ export default function Navbar({
               </button>
 
               <a
-                href="#home"
+                href="/"
                 onClick={(e) => {
                   if (onNavigateHome) {
                     e.preventDefault()
@@ -281,13 +281,13 @@ export default function Navbar({
                                   href={opt.href}
                                   onClick={(e) => {
                                     setIsBooksSolutionOpen(false)
-                                    if (opt.href === '#class-9' && onNavigateClass9) {
+                                    if (opt.href === '/class-9' && onNavigateClass9) {
                                       e.preventDefault()
                                       onNavigateClass9()
                                     }
                                   }}
                                   className={`block px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-bold tracking-tight transition-all duration-150 ${
-                                    opt.href === '#class-9'
+                                    opt.href === '/class-9'
                                       ? 'text-red-600 bg-red-50/70 hover:bg-red-50 hover:text-red-700'
                                       : 'text-slate-900 hover:text-red-600 hover:bg-red-50/50'
                                   }`}
@@ -339,7 +339,7 @@ export default function Navbar({
         {/* Drawer Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200/80 shrink-0">
           <a
-            href="#home"
+            href="/"
             onClick={(e) => {
               setIsMobileMenuOpen(false)
               if (onNavigateHome) {
@@ -404,13 +404,13 @@ export default function Navbar({
                                   href={opt.href}
                                   onClick={(e) => {
                                     setIsMobileMenuOpen(false)
-                                    if (opt.href === '#class-9' && onNavigateClass9) {
+                                    if (opt.href === '/class-9' && onNavigateClass9) {
                                       e.preventDefault()
                                       onNavigateClass9()
                                     }
                                   }}
                                   className={`block py-2 px-3 text-xs font-bold rounded-lg transition-colors ${
-                                    opt.href === '#class-9'
+                                    opt.href === '/class-9'
                                       ? 'text-red-600 bg-red-100/70'
                                       : 'text-slate-800 hover:text-red-600 hover:bg-white'
                                   }`}

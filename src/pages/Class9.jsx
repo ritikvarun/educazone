@@ -7,7 +7,8 @@ import {
   Download,
   BookOpen,
   Sparkles,
-  Clock
+  Clock,
+  ChevronRight
 } from 'lucide-react'
 
 // Filter Options matching reference screenshot
@@ -148,8 +149,28 @@ export default function Class9({ onNavigateHome }) {
       )}
 
       {/* Main Container */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 w-full flex-1">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-7 w-full flex-1">
         
+        {/* Breadcrumb Navigation */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-slate-500 mb-4">
+          <a
+            href="/"
+            onClick={(e) => {
+              if (onNavigateHome) {
+                e.preventDefault()
+                onNavigateHome()
+              }
+            }}
+            className="hover:text-red-600 transition-colors font-medium hover:underline"
+          >
+            Home
+          </a>
+          <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+          <span className="text-slate-600 font-medium">Books Solution</span>
+          <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+          <span className="text-red-600 font-bold">Class 9</span>
+        </nav>
+
         {/* Top Header: Exact Title from Reference */}
         <div className="pb-5 mb-6 border-b border-slate-200/90 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
