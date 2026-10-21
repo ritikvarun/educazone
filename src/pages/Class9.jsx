@@ -364,7 +364,6 @@ export default function Class9({ onNavigateHome }) {
   const [selectedSession, setSelectedSession] = useState('2026-2027')
   const [activeTab, setActiveTab] = useState('Sample Paper')
   const [searchQuery, setSearchQuery] = useState('')
-  const [viewMode, setViewMode] = useState('grid') // 'grid' or 'compact'
 
   // Modal & Toast
   const [selectedSubjectModal, setSelectedSubjectModal] = useState(null)
@@ -615,34 +614,6 @@ export default function Class9({ onNavigateHome }) {
             <div className="flex items-center gap-1.5 bg-slate-100/90 px-3 py-1.5 rounded-xl border border-slate-200/80 text-xs font-bold text-slate-800">
               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span>{selectedSession}</span>
-            </div>
-
-            {/* View Mode Toggle: Grid vs Compact */}
-            <div className="flex items-center gap-1 bg-slate-100/90 p-1 rounded-xl border border-slate-200/80">
-              <button
-                type="button"
-                onClick={() => setViewMode('grid')}
-                className={`p-1.5 rounded-lg text-xs font-bold flex items-center transition-colors cursor-pointer ${
-                  viewMode === 'grid'
-                    ? 'bg-white text-red-600 shadow-2xs'
-                    : 'text-slate-500 hover:text-slate-800'
-                }`}
-                title="Detailed Grid View"
-              >
-                <LayoutGrid className="w-3.5 h-3.5" />
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewMode('compact')}
-                className={`p-1.5 rounded-lg text-xs font-bold flex items-center transition-colors cursor-pointer ${
-                  viewMode === 'compact'
-                    ? 'bg-white text-red-600 shadow-2xs'
-                    : 'text-slate-500 hover:text-slate-800'
-                }`}
-                title="Compact List View"
-              >
-                <List className="w-3.5 h-3.5" />
-              </button>
             </div>
 
           </div>
