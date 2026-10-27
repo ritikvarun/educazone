@@ -12,12 +12,17 @@ const booksSolutionOptions = [
   { name: 'K-8 E-Learning', href: '#k-8-e-learning' },
 ]
 
+const freeMaterialOptions = [
+  { name: 'CBSE', underlined: 'CBSE', suffix: '', href: '/cbse', key: 'cbse' },
+  { name: 'NCERT', underlined: 'NCERT', suffix: '', href: '#ncert', key: 'ncert' },
+]
+
 const subNavItems = [
   { name: 'About Us', href: '#about-us' },
   { name: 'Books', href: '#books' },
-  { name: 'Books Solution', isDropdown: true },
+  { name: 'Books Solution', isDropdown: true, dropdownType: 'booksSolution' },
   { name: 'Paid Test Series', href: '#paid-test-series' },
-  { name: 'Free Resources', href: '#free-resources' },
+  { name: 'Free Material', isDropdown: true, dropdownType: 'freeMaterial' },
   { name: 'Previous Year Papers', href: '#previous-year-papers' },
   { name: 'Job Alerts', href: '#job-alerts' },
   { name: 'Blogs', href: '#blogs' },
@@ -28,19 +33,26 @@ export default function Navbar({
   cartCount = 0,
   onNavigateHome,
   onNavigateClass9,
+  onNavigateCbse,
   currentPage = 'home'
 }) {
   const [searchQuery, setSearchQuery] = useState('')
   const [isBooksSolutionOpen, setIsBooksSolutionOpen] = useState(false)
+  const [isFreeMaterialOpen, setIsFreeMaterialOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isMobileBooksOpen, setIsMobileBooksOpen] = useState(false)
-  const dropdownRef = useRef(null)
+  const [isMobileFreeMaterialOpen, setIsMobileFreeMaterialOpen] = useState(false)
+  const booksDropdownRef = useRef(null)
+  const freeMaterialDropdownRef = useRef(null)
 
-  // Close Books Solution dropdown on click outside
+  // Close dropdowns on click outside
   useEffect(() => {
     function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      if (booksDropdownRef.current && !booksDropdownRef.current.contains(event.target)) {
         setIsBooksSolutionOpen(false)
+      }
+      if (freeMaterialDropdownRef.current && !freeMaterialDropdownRef.current.contains(event.target)) {
+        setIsFreeMaterialOpen(false)
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
@@ -249,13 +261,16 @@ export default function Navbar({
             <ul className="flex items-center justify-center gap-5 sm:gap-7 md:gap-9 py-2.5 overflow-x-auto sm:overflow-visible whitespace-nowrap no-scrollbar text-xs sm:text-sm font-medium text-slate-700">
               {subNavItems.map((item) => (
                 <li key={item.name} className="shrink-0">
-                  {item.isDropdown ? (
-                    <div className="relative inline-block text-left" ref={dropdownRef}>
+                  {item.isDropdown && item.dropdownType === 'booksSolution' ? (
+                    <div className="relative inline-block text-left" ref={booksDropdownRef}>
                       <button
                         type="button"
-                        onClick={() => setIsBooksSolutionOpen((prev) => !prev)}
+                        onClick={() => {
+                          setIsBooksSolutionOpen((prev) => !prev)
+                          setIsFreeMaterialOpen(false)
+                        }}
                         className={`inline-flex items-center gap-1 py-0.5 cursor-pointer font-medium transition-colors duration-150 ${
-                          isBooksSolutionOpen ? 'text-red-600 font-semibold' : 'hover:text-red-600'
+                          isBooksSolutionOpen || currentPage === 'class-9' ? 'text-red-600 font-semibold' : 'hover:text-red-600'
                         }`}
                         aria-expanded={isBooksSolutionOpen}
                       >
@@ -275,7 +290,7 @@ export default function Navbar({
 
                           {/* List Items with Dividers */}
                           <ul className="divide-y divide-slate-100 py-0.5">
-                            {booksSolutionOptions.map((opt, idx) => (
+                            {booksSolutionOptions.map((opt) => (
                               <li key={opt.name}>
                                 <a
                                   href={opt.href}
@@ -293,6 +308,69 @@ export default function Navbar({
                                   }`}
                                 >
                                   {opt.name}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  ) : item.isDropdown && item.dropdownType === 'freeMaterial' ? (
+                    <div className="relative inline-block text-left" ref={freeMaterialDropdownRef}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsFreeMaterialOpen((prev) => !prev)
+                          setIsBooksSolutionOpen(false)
+                        }}
+                        className={`inline-flex items-center gap-1 py-0.5 cursor-pointer font-medium transition-colors duration-150 ${
+                          isFreeMaterialOpen || currentPage === 'cbse' ? 'text-red-600 font-semibold' : 'hover:text-red-600'
+                        }`}
+                        aria-expanded={isFreeMaterialOpen}
+                      >
+                        <span>{item.name}</span>
+                        <ChevronDown
+                          className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                            isFreeMaterialOpen ? 'rotate-180 text-red-600' : 'text-slate-500'
+                          }`}
+                        />
+                      </button>
+
+                      {/* Dropdown Menu matching user's screenshot */}
+                      {isFreeMaterialOpen && (
+                        <div className="absolute left-0 top-full mt-2 w-48 sm:w-52 bg-white rounded-md shadow-2xl border border-slate-200/90 z-50 overflow-hidden text-left animate-in fade-in slide-in-from-top-1 duration-150">
+                          {/* Top Red Accent Stripe */}
+                          <div className="h-[3px] bg-red-600 w-full" />
+
+                          {/* List Items with Dividers */}
+                          <ul className="divide-y divide-slate-100 py-0.5">
+                            {freeMaterialOptions.map((opt) => (
+                              <li key={opt.key}>
+                                <a
+                                  href={opt.href}
+                                  onClick={(e) => {
+                                    setIsFreeMaterialOpen(false)
+                                    if (opt.key === 'cbse' && onNavigateCbse) {
+                                      e.preventDefault()
+                                      onNavigateCbse()
+                                    }
+                                  }}
+                                  className={`flex items-center justify-between px-4 py-2.5 sm:py-3 transition-colors duration-150 group cursor-pointer ${
+                                    opt.key === 'cbse' && currentPage === 'cbse'
+                                      ? 'bg-red-50/70 text-red-600'
+                                      : 'hover:bg-slate-50'
+                                  }`}
+                                >
+                                  {/* Text with red underline like reference screenshot */}
+                                  <span className="font-bold text-slate-900 group-hover:text-red-600 text-xs sm:text-sm tracking-wide transition-colors">
+                                    <span className="border-b-2 border-red-600 pb-0.5">{opt.underlined}</span>
+                                    {opt.suffix}
+                                  </span>
+
+                                  {/* Bold Double Chevron (») */}
+                                  <span className="text-slate-900 group-hover:text-red-600 font-extrabold text-sm sm:text-base leading-none select-none transition-colors">
+                                    &raquo;
+                                  </span>
                                 </a>
                               </li>
                             ))}
@@ -368,13 +446,13 @@ export default function Navbar({
             <ul className="space-y-1">
               {subNavItems.map((item) => (
                 <li key={item.name}>
-                  {item.isDropdown ? (
+                  {item.isDropdown && item.dropdownType === 'booksSolution' ? (
                     <div>
                       <button
                         type="button"
                         onClick={() => setIsMobileBooksOpen((prev) => !prev)}
                         className={`w-full flex items-center justify-between py-2.5 px-3.5 rounded-xl font-bold text-sm transition-all text-left cursor-pointer ${
-                          isMobileBooksOpen
+                          isMobileBooksOpen || currentPage === 'class-9'
                             ? 'bg-red-600 text-white shadow-sm'
                             : 'bg-red-50 text-red-600 border border-red-200/80 hover:bg-red-100/70'
                         }`}
@@ -382,7 +460,7 @@ export default function Navbar({
                         <span className="flex items-center gap-2">
                           <span
                             className={`w-2 h-2 rounded-full ${
-                              isMobileBooksOpen ? 'bg-white' : 'bg-red-600 animate-pulse'
+                              isMobileBooksOpen || currentPage === 'class-9' ? 'bg-white' : 'bg-red-600 animate-pulse'
                             }`}
                           />
                           <span>{item.name}</span>
@@ -398,7 +476,7 @@ export default function Navbar({
                       {isMobileBooksOpen && (
                         <div className="mt-1.5 ml-2 pl-3 border-l-2 border-red-600 bg-red-50/40 rounded-r-xl py-1">
                           <ul className="space-y-0.5">
-                            {booksSolutionOptions.map((opt, idx) => (
+                            {booksSolutionOptions.map((opt) => (
                               <li key={opt.name}>
                                 <a
                                   href={opt.href}
@@ -416,6 +494,65 @@ export default function Navbar({
                                   }`}
                                 >
                                   {opt.name}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  ) : item.isDropdown && item.dropdownType === 'freeMaterial' ? (
+                    <div>
+                      <button
+                        type="button"
+                        onClick={() => setIsMobileFreeMaterialOpen((prev) => !prev)}
+                        className={`w-full flex items-center justify-between py-2.5 px-3.5 rounded-xl font-bold text-sm transition-all text-left cursor-pointer ${
+                          isMobileFreeMaterialOpen || currentPage === 'cbse'
+                            ? 'bg-red-600 text-white shadow-sm'
+                            : 'bg-red-50 text-red-600 border border-red-200/80 hover:bg-red-100/70'
+                        }`}
+                      >
+                        <span className="flex items-center gap-2">
+                          <span
+                            className={`w-2 h-2 rounded-full ${
+                              isMobileFreeMaterialOpen || currentPage === 'cbse' ? 'bg-white' : 'bg-red-600 animate-pulse'
+                            }`}
+                          />
+                          <span>{item.name}</span>
+                        </span>
+                        <ChevronDown
+                          className={`w-4 h-4 transition-transform duration-200 ${
+                            isMobileFreeMaterialOpen ? 'rotate-180 text-white' : 'text-red-600'
+                          }`}
+                        />
+                      </button>
+
+                      {/* Expandable Accordion for Free Material */}
+                      {isMobileFreeMaterialOpen && (
+                        <div className="mt-1.5 ml-2 pl-3 border-l-2 border-red-600 bg-red-50/40 rounded-r-xl py-1">
+                          <ul className="space-y-0.5">
+                            {freeMaterialOptions.map((opt) => (
+                              <li key={opt.key}>
+                                <a
+                                  href={opt.href}
+                                  onClick={(e) => {
+                                    setIsMobileMenuOpen(false)
+                                    if (opt.key === 'cbse' && onNavigateCbse) {
+                                      e.preventDefault()
+                                      onNavigateCbse()
+                                    }
+                                  }}
+                                  className={`flex items-center justify-between py-2 px-3 text-xs font-bold rounded-lg transition-colors ${
+                                    opt.key === 'cbse' && currentPage === 'cbse'
+                                      ? 'text-red-600 bg-red-100/70'
+                                      : 'text-slate-800 hover:text-red-600 hover:bg-white'
+                                  }`}
+                                >
+                                  <span>
+                                    <span className="border-b-2 border-red-600 pb-0.5">{opt.underlined}</span>
+                                    {opt.suffix}
+                                  </span>
+                                  <span className="text-slate-900 font-black text-xs">&raquo;</span>
                                 </a>
                               </li>
                             ))}

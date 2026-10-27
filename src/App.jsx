@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Class9 from './pages/Class9'
+import CbsePage from './pages/CbsePage'
+import CbseClass9Material from './pages/CbseClass9Material'
 
 function isClass9Route() {
   if (typeof window === 'undefined') return false
@@ -10,16 +12,46 @@ function isClass9Route() {
   return path === '/class-9' || path === '/class9' || hash === '#class-9'
 }
 
+function isCbseClass9Route() {
+  if (typeof window === 'undefined') return false
+  const path = window.location.pathname.toLowerCase().replace(/\/+$/, '')
+  const hash = window.location.hash.toLowerCase()
+  return (
+    path === '/cbse/class-9' ||
+    path === '/cbse-class-9' ||
+    path === '/free-material/cbse/class-9' ||
+    hash === '#cbse-class-9'
+  )
+}
+
+function isCbseRoute() {
+  if (typeof window === 'undefined') return false
+  const path = window.location.pathname.toLowerCase().replace(/\/+$/, '')
+  const hash = window.location.hash.toLowerCase()
+  return path === '/cbse' || path === '/free-material/cbse' || hash === '#cbse'
+}
+
+function getInitialRoute() {
+  if (isCbseClass9Route()) return 'cbse-class-9'
+  if (isClass9Route()) return 'class-9'
+  if (isCbseRoute()) return 'cbse'
+  return 'home'
+}
+
 export default function App() {
-  const [currentPage, setCurrentPage] = useState(() => {
-    return isClass9Route() ? 'class-9' : 'home'
-  })
+  const [currentPage, setCurrentPage] = useState(getInitialRoute)
 
   // Listen to browser navigation (back/forward) and route changes
   useEffect(() => {
     function handleLocationChange() {
-      if (isClass9Route()) {
+      if (isCbseClass9Route()) {
+        setCurrentPage('cbse-class-9')
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      } else if (isClass9Route()) {
         setCurrentPage('class-9')
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      } else if (isCbseRoute()) {
+        setCurrentPage('cbse')
         window.scrollTo({ top: 0, behavior: 'smooth' })
       } else {
         setCurrentPage('home')
@@ -27,9 +59,15 @@ export default function App() {
       }
     }
 
-    // If loaded with legacy #class-9 hash, cleanly migrate URL bar to /class-9
-    if (typeof window !== 'undefined' && window.location.hash.toLowerCase() === '#class-9') {
-      window.history.replaceState({}, '', '/class-9')
+    // Clean migrate legacy hashes
+    if (typeof window !== 'undefined') {
+      if (window.location.hash.toLowerCase() === '#class-9') {
+        window.history.replaceState({}, '', '/class-9')
+      } else if (window.location.hash.toLowerCase() === '#cbse-class-9') {
+        window.history.replaceState({}, '', '/cbse/class-9')
+      } else if (window.location.hash.toLowerCase() === '#cbse') {
+        window.history.replaceState({}, '', '/cbse')
+      }
     }
 
     window.addEventListener('popstate', handleLocationChange)
@@ -42,7 +80,13 @@ export default function App() {
 
   const navigateTo = (page) => {
     setCurrentPage(page)
-    const targetPath = page === 'home' ? '/' : `/${page}`
+    const targetPath =
+      page === 'home'
+        ? '/'
+        : page === 'cbse-class-9'
+        ? '/cbse/class-9'
+        : `/${page}`
+
     if (typeof window !== 'undefined') {
       if (window.location.pathname !== targetPath || window.location.hash) {
         window.history.pushState({}, '', targetPath)
@@ -62,12 +106,23 @@ export default function App() {
       <Navbar
         onNavigateHome={() => navigateTo('home')}
         onNavigateClass9={() => navigateTo('class-9')}
+        onNavigateCbse={() => navigateTo('cbse')}
         currentPage={currentPage}
       />
 
       {/* Main Page Routing */}
-      {currentPage === 'class-9' ? (
+      {currentPage === 'cbse-class-9' ? (
+        <CbseClass9Material
+          onNavigateHome={() => navigateTo('home')}
+          onNavigateCbse={() => navigateTo('cbse')}
+        />
+      ) : currentPage === 'class-9' ? (
         <Class9 onNavigateHome={() => navigateTo('home')} />
+      ) : currentPage === 'cbse' ? (
+        <CbsePage
+          onNavigateHome={() => navigateTo('home')}
+          onNavigateCbseClass9={() => navigateTo('cbse-class-9')}
+        />
       ) : (
         <Home />
       )}
